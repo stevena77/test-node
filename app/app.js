@@ -2,6 +2,8 @@
 
 // 모듈
 const express = require("express");
+// const bodyParser = require("body-parser");
+
 const app = express();
 
 const PORT = 3000;
@@ -12,8 +14,12 @@ const home = require("./src/routes/home");
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
-app.use("/", home); // use -> 미들웨어 등록해주는 메서드
+// use -> 미들웨어 등록해주는 메서드
+// 모든 미들웨어는 위에서부터 아래로 순차적으로 실행. 미들웨어는 순서가 중요
 app.use(express.static(__dirname + "/src/public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/", home);
 
 module.exports = app;
 
